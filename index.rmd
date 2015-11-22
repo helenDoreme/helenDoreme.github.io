@@ -1,0 +1,81 @@
+---
+title       : Heart Disease Predication 
+subtitle    : A shiny Application for Developing Data Product Course 
+author      : HL
+mode : selfcontained #{standalone, selfcontained}
+framework: revealjs
+hitheme : zenburn
+revealjs:
+        theme: Simple  # {solarized,Black,White,League,Sky,Beige,Simple,Serif, Night,Moon}
+        transition: slide # {fade/slide/convex/concave/zoom}
+        center: "true"
+url: {lib: "."}
+bootstrap:
+        theme: amelia
+        
+---
+
+## **Heart Disease Predication**
+<br> 
+### **A Shiny Application for Developing Data Product Course**
+
+---
+
+## **Introduction**
+
+- This presentation is a brief summary of a shiny application named "Heart Disease Predication".
+- This shiny application is developed as part of the course project of Coursera Developing Data Products course. 
+- Heart Disease Predication contains three forms of input:
+  - Textbox: user can input their Age, Blood Pressure (mm Hg), Total Cholesterol (mg/dl) and Heart Rate at each corresponding textbox.
+  - Radio button: user can select their gender (Male or Female) by clicking the correct radio button. 
+  - Checkbox: user can further select if he wants to display the Normal Range of Blood Pressure, the Normal Range of Total Cholesterol and the Normal Range of Heart Rate by checking each matching checkbox.  
+
+---
+
+
+## **Data**
+
+### **Data Source**
+- Heart Disease Predication is developed based on the [heart disease cleveland database on UCI Machine Learning Repository] (http://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/processed.cleveland.data)
+- The database contains 303 observations and 14 variables. To simplify the user input process, only 6 variables (Age, Gender, Blood Pressure, Total Cholesterol, Heart Rate and Predication Value) were selected to develop this application.                     <br>                                                                                          
+
+### **Data Training and Testing**          
+- 80% of the observations are assigned as the training set and the remaining 20% are assigned as the testing set. 
+- The model is trained using random forest with cross validation. 
+
+
+---  
+
+
+## **Application Outputs**
+
+- Based on the input values, Heart Disease Predication will use the trained random forest model to predict the risk factor of   having a heart disease.
+- The application outcome contains three parts:
+  - Display the parameters that the user input. 
+  - Present the calculated predication value. 
+  - Display the Normal Range of Blood Pressure, the Normal Range of Total Cholesterol and/or the Normal Range of Heart Rate based on use's selection.
+
+
+---
+
+## **Load and Process Data**
+
+```{r}
+# Download the data file from heart disease Cleveland database on UCI Machine Learning Repository
+download.file("https://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/processed.cleveland.data", "processed.cleveland.data")
+
+# Read the data
+data<-read.csv("processed.cleveland.data")
+
+# Extract the valuables used for developing shiny application
+subsetData<-data[,c(1, 2, 4, 5, 8, 14)]
+
+# Add the column names to each selected column. The column names are stored in a separate file on 
+# UCI ML Repo
+colnames(subsetData)<- c("Age", "Gender", "Blood_Pressure", "Cholesterol", "Heart_Rate", "Prediction")
+
+# Show the head of the final dataset 
+head(subsetData)
+```
+
+
